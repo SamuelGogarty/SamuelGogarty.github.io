@@ -10,18 +10,20 @@ On FreeBSD, murmur can be installed via the binary package manager pkg, or throu
 
 here we will be installing with pkg as shown below:
 
-```
+```markdown
 root@freebsdvm: pkg install murmur
 ```
 
 Simply running murmur with:
-
+```markdown
 root@freebsdvm: murmurd
+```
 We will start the murmur server with the default config as a background process. But it is often desirable that we have service control. Let's start with our script, let's name a script "mumbled" inside /etc/rc.d/.
-
+```markdown
 root@freebsdvm: ee /etc/rc.d/mumbled
+```
 The bare bones of the script for basic functionality looks like this:
-
+```markdown
 #!/bin/sh
 
 . /etc/rc.subr
@@ -33,25 +35,27 @@ command="/usr/local/sbin/${name}"
 
 load_rc_config $name
 run_rc_command "$1"
+```
 With this script, the daemon will automatically be started on boot up, and you will be able to issue the "start" "stop" and "status" commands. Each has a self explanatory name, the syntax looks like this:
-
+```markdown
 root@freebsdvm:/etc/rc.d$ service mumbled stop #stops the daemon
 Stopping murmurd.
 Waiting for PIDS: 662.
-
+```
+```markdown
 root@freebsdvm:/etc/rc.d$ service mumbled start #starts the daemon
 Starting murmurd.
-
-
+```
+```markdown
 root@freebsdvm:/etc/rc.d$ service mumbled status #shows the process ID
 murmurd is running as pid 803.
-
+```markdown
 Although this is script is bare-bones when it comes to the applicable uses for a service script. Since it is just sh with imported functions, you can get pretty creative on what this script will run. For example a lot of people like to start their server applications that have a command line interpreter to be inside screen. Screen is a terminal multiplexer often used to contain the command line interpreter inside a re-attachable session, so to not be lost when the ssh pipe is broken.
 
 In this VM, I have screen installed, let's edit the script so when the service starts on boot up, it is started in screen.
 
 We will have to start murmurd with the foreground argument -fg, as seen here:
-
+```markdown
 root@freebsdvm:~$ murmurd -fg #opens murmurd as a foreground proc, doesnt fork.
 <W>2018-09-16 06:52:59.535 Initializing settings from /root/.murmurd/murmur.ini (basepath /root/.murmurd)
 <W>2018-09-16 06:52:59.536 Meta: TLS cipher preference is "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:AES256-SHA:AES128-SHA"
@@ -62,8 +66,10 @@ root@freebsdvm:~$ murmurd -fg #opens murmurd as a foreground proc, doesnt fork.
 <W>2018-09-16 06:52:59.555 1 => Server listening on https://www.linkedin.com/redir/invalid-link-page?url=0%2e0%2e0%2e0:64738
 <W>2018-09-16 06:52:59.558 1 => Announcing server via bonjour
 <W>2018-09-16 06:53:02.720 1 => Not registering server as public
+```
 Let's edit the service script so it is started in foreground by default, inside of screen.
 
+```markdown
 #!/bin/sh
 
 . /etc/rc.subr
@@ -89,7 +95,7 @@ stop_cmd=daemon_stop
 
 load_rc_config $name
 run_rc_command "$1"
-
+```
 
 Here we can see that I override the default stop and start commands imported from rc.subr with my own functions, since we need to do more then just kill and start murmurd itself. In the screen_start() function we are starting a screen session in detached mode and then naming that session "mumbled". The next line in the function passes a command to that session without attaching, it passes the command "murmurd -fg" into the session, which runs murmurd in the foreground rather than forking it into the background.
 
