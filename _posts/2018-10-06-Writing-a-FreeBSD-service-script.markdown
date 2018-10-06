@@ -10,9 +10,9 @@ On FreeBSD, murmur can be installed via the binary package manager pkg, or throu
 
 here we will be installing with pkg as shown below:
 
-'''
+```
 root@freebsdvm: pkg install murmur
-'''
+```
 
 Simply running murmur with:
 
