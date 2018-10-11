@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My website</title>
+    <description>A virtual proof that name is awesome!</description>
+    <link>http://localhost:4000</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Writing A Freebsd Service Script</title>
+        <description>
+          
+          Here I will be writing my notes for creating a service script in FreeBSD from scratch, generally used for server applications. Usually you don’t need to write service scripts for server applications, as any mainstream server applications such as NGINX, Apache httpd and any other daemon such as an IRCd...
+        </description>
+        <pubDate>Sat, 06 Oct 2018 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/2018-10-06-Writing-a-FreeBSD-service-script/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018-10-06-Writing-a-FreeBSD-service-script/</guid>
+      </item>
+    
+      <item>
+        <title>Installing DRM-next-kmod on FreeBSD.12.0-CURRENT</title>
+        <description>
+          
+          OUTDATED I wrote this back when I was 16, the drivers for the intel graphics for broadwell and up can now be installed via ports/pkg on the STABLE release of FreeBSD. Here is my first blog showing my personal experience of getting FreeBSD working on a my Thinkpad T450s in...
+        </description>
+        <pubDate>Tue, 05 Jan 2016 00:00:00 -0800</pubDate>
+        <link>http://localhost:4000/2016-01-05-DRM-next-kmod/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016-01-05-DRM-next-kmod/</guid>
+      </item>
+    
+  </channel>
+</rss>
